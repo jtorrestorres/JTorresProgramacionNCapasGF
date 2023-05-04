@@ -9,7 +9,7 @@ namespace PL //
 {
     internal class Materia
     {
-        public static void Add()
+        public static void Add()  //Add materia by LINQ
         {
             //Id ->Autoincrementable
 

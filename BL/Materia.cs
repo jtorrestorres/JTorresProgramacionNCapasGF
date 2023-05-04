@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BL
 {
-    public class Materia
+    public class Materia //
     {
 
         //    if (row[4].ToString() != "") //"1"
