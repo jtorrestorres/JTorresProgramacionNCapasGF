@@ -17,6 +17,7 @@ namespace ML
         public string FechaCreacion { get; set; }
         public string FechaModificacion { get; set; }
         public string FechaInscripcion { get; set; } //fecha nacimiento
+        public List<object> Materias { get; set; }
         public ML.Usuario Usuario { get; set; }
         public byte[] Imagen { get; set; }
 

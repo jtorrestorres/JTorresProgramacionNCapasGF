@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Text;
+using System.Linq;
+using System.Xml;
 
 namespace BL
 {
@@ -241,11 +243,121 @@ namespace BL
         {
 
         }
-
-
-
         public static void GetById()
         {
+
+        }
+
+
+        public static ML.Result AddLinQ(ML.Materia materia)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.JTorresProgramacionNCapasEntities context = new DL_EF.JTorresProgramacionNCapasEntities())
+                {
+                    DL_EF.Materia materiaLinq = new DL_EF.Materia();
+                    materiaLinq.IdMateria = materia.IdMateria;
+                    materiaLinq.Nombre = materia.Nombre;
+                    materiaLinq.Creditos = materia.Creditos;
+                    materiaLinq.Costo = materia.Costo;
+                    //materiaLinq.Semestre = new DL_EF.Semestre();
+                    materiaLinq.IdSemestre = materia.Semestre.IdSemestre;
+                    materiaLinq.IdUsuarioModificacion = materia.Usuario.IdUsuario;
+                    materiaLinq.FechaCreacion = DateTime.Now;
+                    materiaLinq.FechaModificacion = DateTime.Now;
+                    materiaLinq.FechaInscripcion = DateTime.ParseExact(materia.FechaInscripcion, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+
+                    context.Materias.Add(materiaLinq);
+
+                    int rowsAffected = context.SaveChanges();
+
+                    if (rowsAffected > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Error al insertar la materia";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+
+        }
+
+        public static ML.Result GetAllLinQ()
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.JTorresProgramacionNCapasEntities context = new DL_EF.JTorresProgramacionNCapasEntities())
+                {
+                    var listMaterias = (from materiaAlias in context.Materias
+                                        select new
+                                        {
+                                            IdMateria1 = materiaAlias.IdMateria,
+                                            Nombre1 = materiaAlias.Nombre,
+                                            Creditos1 = materiaAlias.Creditos,
+                                            Costo1 = materiaAlias.Costo
+
+                                        }).ToList();
+
+
+
+                    if(listMaterias!= null)
+                    {
+
+                        if(listMaterias.Count>0)
+                        {
+                            result.Objects = new List<object>();
+                            foreach (var obj in listMaterias)
+                            {
+                                ML.Materia materiaItem = new ML.Materia();
+                                materiaItem.IdMateria = obj.IdMateria1;
+                                materiaItem.Nombre = obj.Nombre1;
+                                materiaItem.Creditos = obj.Creditos1.Value;
+                                materiaItem.Costo = obj.Costo1.Value;
+
+                                result.Objects.Add(materiaItem);
+                            }
+
+                            result.Correct = true;
+
+                        }
+                        else
+                        {
+                            result.Correct = false;
+                            result.ErrorMessage = "La tabla Materia no tiene registros";
+                        }
+                    }
+
+                    //if (rowsAffected > 0)
+                    //{
+                    //    result.Correct = true;
+                    //}
+                    //else
+                    //{
+                    //    result.Correct = false;
+                    //    result.ErrorMessage = "Error al insertar la materia";
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
 
         }
     }

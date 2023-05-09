@@ -18,6 +18,7 @@ namespace PL //
             Console.WriteLine("Ingrese el Nombre de la materia");
             materia.Nombre = Console.ReadLine();
 
+            //materia.Nombre.("a");
             Console.WriteLine("Ingrese los créditos de la materia");
             materia.Creditos = byte.Parse(Console.ReadLine());
 
@@ -36,7 +37,7 @@ namespace PL //
             Console.WriteLine("Ingrese la fecha de inscripción dd-MM-yyyy"); //08-06-1996
             materia.FechaInscripcion = Console.ReadLine();
 
-            ML.Result result = BL.Materia.AddEF(materia);
+            ML.Result result = BL.Materia.AddLinQ(materia);
 
             if (result.Correct)
             {

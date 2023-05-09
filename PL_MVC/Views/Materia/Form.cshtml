@@ -1,0 +1,52 @@
+﻿@model ML.Materia
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Materia</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Ingrese los datos de la materia</h5>
+        </div>
+        <hr />
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label("Nombre")
+            @Html.TextBoxFor(materia => Model.Nombre, new { @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label("Creditos")
+            @Html.TextBoxFor(materia => Model.Creditos, new { @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label("Costo")
+            @Html.TextBoxFor(materia => Model.Costo, new { @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-1">
+            @Html.ActionLink("Guardar", "Form", "Materia", new { @class = "btn btn-success" })
+        </div>
+        <div class="col-md-1">
+            @Html.ActionLink("Cancelar", "Form", "Materia", new { @class = "btn btn-danger" })
+        </div>
+    </div>
+
+</div>
+
+
