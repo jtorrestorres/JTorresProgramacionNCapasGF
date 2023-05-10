@@ -13,18 +13,15 @@ namespace PL_MVC.Controllers
         public ActionResult GetAll()
         {
             ML.Materia materia = new ML.Materia();
-
+            materia.Materias = new List<object>();
 
             ML.Result result = BL.Materia.GetAllLinQ();
 
             if (result.Correct)
             {
-                materia.Materias = result.Objects;
+                //materia.Materias = result.Objects;
             }
-            else
-            {
-                ViewBag.Message = "Ocurrió un error al traer los registros de materias" + result.ErrorMessage;
-            }
+            
 
             return View(materia);
         }
@@ -59,28 +56,54 @@ namespace PL_MVC.Controllers
         {
             if (materia.IdMateria == 0) //add
             {
-                BL.Materia.AddLinQ(materia);
+                ML.Result result = BL.Materia.AddLinQ(materia);
+
+                if (result.Correct)
+                {
+                    //mediante el viewbag enviamos datos
+                    //del controlador -> hacia la vista
+                    ViewBag.Mensaje = "Se ha ingresado correctamente la materia";
+                }
+                else
+                {
+                    ViewBag.Mensaje = "No se ha ingresado correctamente la materia. Error: " + result.ErrorMessage;
+                }
+
             }
             else //update
             {
-                BL.Materia.Update(materia);
+                ML.Result result = BL.Materia.Update(materia);
+
+                if (result.Correct)
+                {
+                    //mediante el viewbag enviamos datos
+                    //del controlador -> hacia la vista
+                    ViewBag.Mensaje = "Se ha actualizado correctamente la materia";
+                }
+                else
+                {
+                    ViewBag.Mensaje = "No se ha podido actualizar correctamente la materia. Error: " + result.ErrorMessage;
+                }
             }
 
-            return View();
+            return PartialView("Modal");
         }
 
 
         public ActionResult Delete(int IdMateria)
         {
             ML.Result result = BL.Materia.Delete(IdMateria);
-            
+
             if (result.Correct)
             {
-                //modal
-
-                
+                ViewBag.Mensaje = "Se ha eliminado correctamente la materia";
             }
-            return View();
+            else
+            {
+                ViewBag.Mensaje = "No se ha podido eliminar la materia. Error: " + result.ErrorMessage;
+            }
+
+            return PartialView("Modal");
         }
 
 

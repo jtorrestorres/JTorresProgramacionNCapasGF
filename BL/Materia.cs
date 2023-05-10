@@ -234,8 +234,11 @@ namespace BL
             return result;
 
         }
-        public static void Update(ML.Materia materia)
+        public static ML.Result Update(ML.Materia materia)
         {
+            ML.Result result = new ML.Result();
+
+            return result;
 
         }
 
