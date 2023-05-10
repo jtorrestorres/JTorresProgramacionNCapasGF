@@ -34,19 +34,21 @@
                 <tbody>
                     @foreach (ML.Materia materia in Model.Materias)
                     {
-                        <tr>
-                            <td>
-                                <a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Materia", new { IdMateria = materia.IdMateria })"></a>
-                            </td>
-                            <td class="hidden">@materia.IdMateria</td>
+                    <tr>
+                        <td>
+                            <a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Materia", new { IdMateria = materia.IdMateria })"></a>
+                        </td>
+                        <td class="hidden">@materia.IdMateria</td>
 
-                            <td>@materia.IdMateria</td>
-                            <td>@materia.Nombre</td>
-                            <td>@materia.Creditos</td>
-                            <td>@materia.Costo</td>
-                            <td>@materia.Costo</td>
+                        <td>@materia.IdMateria</td>
+                        <td>@materia.Nombre</td>
+                        <td>@materia.Creditos</td>
+                        <td>@materia.Costo</td>
+                        <td>
+                            <a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Materia", new { IdMateria= materia.IdMateria})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a>
+                        </td>
 
-                        </tr>
+                    </tr>
                     }
 
                 </tbody>

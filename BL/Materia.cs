@@ -203,7 +203,7 @@ namespace BL
 
             try
             {
-                using(DL_EF.JTorresProgramacionNCapasEntities context = new DL_EF.JTorresProgramacionNCapasEntities())
+                using (DL_EF.JTorresProgramacionNCapasEntities context = new DL_EF.JTorresProgramacionNCapasEntities())
                 {
 
                     //string -> DateTime
@@ -225,23 +225,24 @@ namespace BL
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.Correct = false;
                 result.ErrorMessage = ex.Message;
             }
-             
+
             return result;
 
         }
-        public static void Update()
+        public static void Update(ML.Materia materia)
         {
 
         }
 
-        public static void Delete()
+        public static ML.Result Delete(int IdMateria)
         {
-
+            ML.Result result = new ML.Result();
+            return result;
         }
         public static void GetById()
         {
@@ -258,13 +259,11 @@ namespace BL
                 using (DL_EF.JTorresProgramacionNCapasEntities context = new DL_EF.JTorresProgramacionNCapasEntities())
                 {
                     DL_EF.Materia materiaLinq = new DL_EF.Materia();
-                    materiaLinq.IdMateria = materia.IdMateria;
                     materiaLinq.Nombre = materia.Nombre;
                     materiaLinq.Creditos = materia.Creditos;
                     materiaLinq.Costo = materia.Costo;
-                    //materiaLinq.Semestre = new DL_EF.Semestre();
-                    materiaLinq.IdSemestre = materia.Semestre.IdSemestre;
-                    materiaLinq.IdUsuarioModificacion = materia.Usuario.IdUsuario;
+                  //materiaLinq.IdSemestre = materia.Semestre.IdSemestre;
+                  //  materiaLinq.IdUsuarioModificacion = materia.Usuario.IdUsuario;
                     materiaLinq.FechaCreacion = DateTime.Now;
                     materiaLinq.FechaModificacion = DateTime.Now;
                     materiaLinq.FechaInscripcion = DateTime.ParseExact(materia.FechaInscripcion, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -314,10 +313,10 @@ namespace BL
 
 
 
-                    if(listMaterias!= null)
+                    if (listMaterias != null)
                     {
 
-                        if(listMaterias.Count>0)
+                        if (listMaterias.Count > 0)
                         {
                             result.Objects = new List<object>();
                             foreach (var obj in listMaterias)
@@ -350,6 +349,55 @@ namespace BL
                     //    result.Correct = false;
                     //    result.ErrorMessage = "Error al insertar la materia";
                     //}
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+
+        }
+
+
+        public static ML.Result GetByLinQ(int IdMateria)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.JTorresProgramacionNCapasEntities context = new DL_EF.JTorresProgramacionNCapasEntities())
+                {
+                    var itemMateria = (from materiaAlias in context.Materias
+                                       where materiaAlias.IdMateria == IdMateria
+                                       select new
+                                       {
+                                           IdMateria1 = materiaAlias.IdMateria,
+                                           Nombre1 = materiaAlias.Nombre,
+                                           Creditos1 = materiaAlias.Creditos,
+                                           Costo1 = materiaAlias.Costo
+
+                                       }).FirstOrDefault();
+
+
+
+                    if (itemMateria != null)
+                    {
+                        ML.Materia materiaItem = new ML.Materia();
+                        materiaItem.IdMateria = itemMateria.IdMateria1;
+                        materiaItem.Nombre = itemMateria.Nombre1;
+                        materiaItem.Creditos = itemMateria.Creditos1.Value;
+                        materiaItem.Costo = itemMateria.Costo1.Value;
+                        result.Object = materiaItem;
+                        result.Correct = true;
+
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "La tabla Materia no tiene registros";
+                    }
                 }
             }
             catch (Exception ex)

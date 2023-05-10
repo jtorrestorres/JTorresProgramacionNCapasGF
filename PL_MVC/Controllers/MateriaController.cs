@@ -29,13 +29,60 @@ namespace PL_MVC.Controllers
             return View(materia);
         }
 
-
-        //form
-
-        [HttpGet]
-        public ActionResult Form()
+        [HttpGet] // Mostrar el formulario
+        public ActionResult Form(int? IdMateria)
         {
-            return View(new ML.Materia());
+            ML.Materia materia = new ML.Materia();
+
+            if (IdMateria == null) //add
+            {
+                return View(materia); //vacio
+            }
+            else // update
+            {
+                //Get By Id
+                ML.Result result = BL.Materia.GetByLinQ(IdMateria.Value);
+
+                //unboxing
+                materia.IdMateria = ((ML.Materia)result.Object).IdMateria;
+                materia.Nombre = ((ML.Materia)result.Object).Nombre;
+                materia.Costo = ((ML.Materia)result.Object).Costo;
+                materia.Creditos = ((ML.Materia)result.Object).Creditos;
+
+                return View(materia);
+            }
+
         }
+
+        [HttpPost] // Recibir los datos del formulario
+        public ActionResult Form(ML.Materia materia)
+        {
+            if (materia.IdMateria == 0) //add
+            {
+                BL.Materia.AddLinQ(materia);
+            }
+            else //update
+            {
+                BL.Materia.Update(materia);
+            }
+
+            return View();
+        }
+
+
+        public ActionResult Delete(int IdMateria)
+        {
+            ML.Result result = BL.Materia.Delete(IdMateria);
+            
+            if (result.Correct)
+            {
+                //modal
+
+                
+            }
+            return View();
+        }
+
+
     }
 }

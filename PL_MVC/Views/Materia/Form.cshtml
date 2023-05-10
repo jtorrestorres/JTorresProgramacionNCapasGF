@@ -17,35 +17,59 @@
         <hr />
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            @Html.Label("Nombre")
-            @Html.TextBoxFor(materia => Model.Nombre, new { @class = "form-control" })
+
+    @using (Html.BeginForm("Form", "Materia", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(materia => Model.IdMateria, new { @class = "hidden" })
+                @Html.TextBoxFor(materia => Model.IdMateria, new { @class = "form-control hidden" })
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-6">
-            @Html.Label("Creditos")
-            @Html.TextBoxFor(materia => Model.Creditos, new { @class = "form-control" })
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(materia => Model.Nombre)
+                @Html.TextBoxFor(materia => Model.Nombre, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-6">
-            @Html.Label("Costo")
-            @Html.TextBoxFor(materia => Model.Costo, new { @class = "form-control" })
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(materia => Model.Creditos)
+                @Html.TextBoxFor(materia => Model.Creditos, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-1">
-            @Html.ActionLink("Guardar", "Form", "Materia", new { @class = "btn btn-success" })
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(materia => Model.Costo)
+                @Html.TextBoxFor(materia => Model.Costo, new { @class = "form-control" })
+            </div>
         </div>
-        <div class="col-md-1">
-            @Html.ActionLink("Cancelar", "Form", "Materia", new { @class = "btn btn-danger" })
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(materia => Model.FechaInscripcion)
+                @Html.TextBoxFor(materia => Model.FechaInscripcion, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
+
+        <br />
+        <div class="row">
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+            <div class="col-md-1">
+                @Html.ActionLink("Cancelar", "Form", "Materia", new { @class = "btn btn-danger" })
+            </div>
+        </div>
+
+    }
+
 
 </div>
 
