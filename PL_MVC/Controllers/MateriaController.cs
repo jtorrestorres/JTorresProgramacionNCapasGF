@@ -19,7 +19,7 @@ namespace PL_MVC.Controllers
 
             if (result.Correct)
             {
-                //materia.Materias = result.Objects;
+                materia.Materias = result.Objects;
             }
             
 
@@ -28,6 +28,7 @@ namespace PL_MVC.Controllers
 
         [HttpGet] // Mostrar el formulario
         public ActionResult Form(int? IdMateria)
+        
         {
             ML.Materia materia = new ML.Materia();
             
@@ -49,7 +50,7 @@ namespace PL_MVC.Controllers
                 materia.Nombre = ((ML.Materia)result.Object).Nombre;
                 materia.Costo = ((ML.Materia)result.Object).Costo;
                 materia.Creditos = ((ML.Materia)result.Object).Creditos;
-
+                materia.Semestre.IdSemestre = ((ML.Materia)result.Object).Semestre.IdSemestre;
                 return View(materia);
             }
 

@@ -310,8 +310,8 @@ namespace BL
                                             IdMateria1 = materiaAlias.IdMateria,
                                             Nombre1 = materiaAlias.Nombre,
                                             Creditos1 = materiaAlias.Creditos,
-                                            Costo1 = materiaAlias.Costo
-
+                                            Costo1 = materiaAlias.Costo,
+                                            IdSemestre1 = materiaAlias.IdSemestre
                                         }).ToList();
 
 
@@ -329,6 +329,8 @@ namespace BL
                                 materiaItem.Nombre = obj.Nombre1;
                                 materiaItem.Creditos = obj.Creditos1.Value;
                                 materiaItem.Costo = obj.Costo1.Value;
+                                materiaItem.Semestre = new ML.Semestre();                               
+                                materiaItem.Semestre.IdSemestre = (obj.IdSemestre1 == null)? byte.Parse("0"): obj.IdSemestre1.Value;
 
                                 result.Objects.Add(materiaItem);
                             }
@@ -379,8 +381,8 @@ namespace BL
                                            IdMateria1 = materiaAlias.IdMateria,
                                            Nombre1 = materiaAlias.Nombre,
                                            Creditos1 = materiaAlias.Creditos,
-                                           Costo1 = materiaAlias.Costo
-
+                                           Costo1 = materiaAlias.Costo,
+                                           IdSemestre1=materiaAlias.IdSemestre
                                        }).FirstOrDefault();
 
 
@@ -392,6 +394,8 @@ namespace BL
                         materiaItem.Nombre = itemMateria.Nombre1;
                         materiaItem.Creditos = itemMateria.Creditos1.Value;
                         materiaItem.Costo = itemMateria.Costo1.Value;
+                        materiaItem.Semestre = new ML.Semestre();
+                        materiaItem.Semestre.IdSemestre = (itemMateria.IdSemestre1 != null) ? itemMateria.IdSemestre1.Value : byte.Parse("0");
                         result.Object = materiaItem;
                         result.Correct = true;
 
