@@ -30,6 +30,10 @@ namespace PL_MVC.Controllers
         public ActionResult Form(int? IdMateria)
         {
             ML.Materia materia = new ML.Materia();
+            
+            ML.Result resultSemestres =BL.Semestre.GetAllLinQ();
+            materia.Semestre = new ML.Semestre();
+            materia.Semestre.Semestres = resultSemestres.Objects;
 
             if (IdMateria == null) //add
             {

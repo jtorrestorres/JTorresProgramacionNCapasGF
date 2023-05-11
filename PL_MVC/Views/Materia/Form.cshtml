@@ -56,6 +56,17 @@
                 @Html.LabelFor(materia => Model.FechaInscripcion)
                 @Html.TextBoxFor(materia => Model.FechaInscripcion, new { @class = "form-control" })
             </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(materia => Model.Semestre.Semestres)
+                @Html.DropDownListFor(model => model.Semestre.IdSemestre, new SelectList(Model.Semestre.Semestres, "IdSemestre", "Nombre"), "Selecciona un semestre correspondiente", new { @class = "form-control" })
+            </div>
+
+
         </div>
 
         <br />

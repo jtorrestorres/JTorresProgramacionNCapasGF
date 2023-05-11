@@ -11,6 +11,9 @@ namespace ML
         public byte IdSemestre { get; set; }
         public string Nombre { get; set; }
         public string CicloEscolar { get; set; }
-        //...
+
+        public List<object> Semestres { get; set; }
+
+
     }
 }
