@@ -30,6 +30,8 @@ namespace DL_EF
         public virtual DbSet<Semestre> Semestres { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Materia> Materias { get; set; }
+        public virtual DbSet<Grupo> Grupoes { get; set; }
+        public virtual DbSet<Plantel> Plantels { get; set; }
     
         public virtual ObjectResult<MateriaGetAll_Result> MateriaGetAll()
         {

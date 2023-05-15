@@ -12,21 +12,19 @@ namespace DL_EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Plantel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Plantel()
         {
-            this.Materias = new HashSet<Materia>();
+            this.Grupoes = new HashSet<Grupo>();
         }
     
-        public int IdUsuario { get; set; }
+        public int IdPlantel { get; set; }
         public string Nombre { get; set; }
-        public string APellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public Nullable<int> IdComputadora { get; set; }
+        public string PaginaWeb { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Materia> Materias { get; set; }
+        public virtual ICollection<Grupo> Grupoes { get; set; }
     }
 }

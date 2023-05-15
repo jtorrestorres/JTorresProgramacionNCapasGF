@@ -10,6 +10,9 @@
         <EntityTypeShape EntityType="JTorresProgramacionNCapasModel.Materia" Width="1.5" PointX="3" PointY="3" />
         <AssociationConnector Association="JTorresProgramacionNCapasModel.FK__Materia__IdSemes__3A81B327" />
         <AssociationConnector Association="JTorresProgramacionNCapasModel.FK__Materia__IdUsuar__49C3F6B7" />
+        <EntityTypeShape EntityType="JTorresProgramacionNCapasModel.Grupo" Width="1.5" PointX="7.625" PointY="0.875" />
+        <EntityTypeShape EntityType="JTorresProgramacionNCapasModel.Plantel" Width="1.5" PointX="5.375" PointY="1" />
+        <AssociationConnector Association="JTorresProgramacionNCapasModel.FK__Grupo__IdPlantel__52593CB8" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

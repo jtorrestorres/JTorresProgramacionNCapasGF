@@ -1,0 +1,59 @@
+﻿@{@model ML.Alumno
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                Alumno
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.DropDownListFor(model => model.Grupo.Plantel.IdPlantel, new SelectList(Model.Grupo.Plantel.Planteles, "IdPlantel", "Nombre"), "Selecciona un plantel", new { @class = "form-control", @id="ddlPlantel"})
+        </div>       
+        <div class="col-md-3">
+            @if (Model.Grupo.Grupos != null)
+            {
+                @Html.DropDownListFor(model => model.Grupo.IdGrupo, new SelectList(Model.Grupo.Grupos, "IdGrupo", "Nombre"), "Selecciona un grupo", new { @class = "form-control", @id= "ddlGrupo" })
+            }
+            else
+            {
+                @Html.DropDownListFor(model => model.Grupo.IdGrupo, new SelectList(string.Empty, "IdGrupo", "Nombre"), "Selecciona un grupo", htmlAttributes: new { @class = "form-control" })
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#ddlPlantel").change(function () {
+            $("#ddlGrupo").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetGrupo")',
+                dataType: 'json',
+                data: { IdPlantel: $("#ddlPlantel").val() },
+                success: function (grupos) {
+                    $("#ddlGrupo").append('<option value="0">' + 'Seleccione un grupo' + '</option>');
+                    $.each(grupos, function (i  , grupos) {
+                        $("#ddlGrupo").append('<option value="'
+                            + grupos.IdGrupo + '">'
+                            + grupos.Nombre + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+            });
+        });
+    });
+</script>

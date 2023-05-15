@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="JTorresProgramacionNCapasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="IdGrupo" />
+          </Key>
+          <Property Name="IdGrupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Especialidad" Type="varchar" MaxLength="50" />
+          <Property Name="IdPlantel" Type="int" />
+        </EntityType>
         <EntityType Name="Materia">
           <Key>
             <PropertyRef Name="IdMateria" />
@@ -19,6 +28,14 @@
           <Property Name="IdUsuarioModificacion" Type="int" />
           <Property Name="Imagen" Type="varbinary(max)" />
           <Property Name="FechaInscripcion" Type="date" />
+        </EntityType>
+        <EntityType Name="Plantel">
+          <Key>
+            <PropertyRef Name="IdPlantel" />
+          </Key>
+          <Property Name="IdPlantel" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="PaginaWeb" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Semestre">
           <Key>
@@ -35,7 +52,20 @@
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="APellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" />
+          <Property Name="IdComputadora" Type="int" />
         </EntityType>
+        <Association Name="FK__Grupo__IdPlantel__52593CB8">
+          <End Role="Plantel" Type="Self.Plantel" Multiplicity="0..1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plantel">
+              <PropertyRef Name="IdPlantel" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="IdPlantel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Materia__IdSemes__3A81B327">
           <End Role="Semestre" Type="Self.Semestre" Multiplicity="0..1" />
           <End Role="Materia" Type="Self.Materia" Multiplicity="*" />
@@ -74,9 +104,15 @@
           <Parameter Name="IdMateria" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="JTorresProgramacionNCapasModelStoreContainer">
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materia" EntityType="Self.Materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plantel" EntityType="Self.Plantel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Semestre" EntityType="Self.Semestre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Grupo__IdPlantel__52593CB8" Association="Self.FK__Grupo__IdPlantel__52593CB8">
+            <End Role="Plantel" EntitySet="Plantel" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
           <AssociationSet Name="FK__Materia__IdSemes__3A81B327" Association="Self.FK__Materia__IdSemes__3A81B327">
             <End Role="Semestre" EntitySet="Semestre" />
             <End Role="Materia" EntitySet="Materia" />
@@ -107,6 +143,7 @@
           <Property Name="APellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Materias" Relationship="JTorresProgramacionNCapasModel.FK__Materia__IdUsuar__49C3F6B7" FromRole="Usuario" ToRole="Materia" />
+          <Property Name="IdComputadora" Type="Int32" />
         </EntityType>
         <EntityContainer Name="JTorresProgramacionNCapasEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Semestres" EntityType="Self.Semestre" />
@@ -133,6 +170,12 @@
             <Parameter Name="Imagen" Mode="In" Type="Binary" />
             <Parameter Name="FechaInscripcion" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="Grupoes" EntityType="JTorresProgramacionNCapasModel.Grupo" />
+          <EntitySet Name="Plantels" EntityType="JTorresProgramacionNCapasModel.Plantel" />
+          <AssociationSet Name="FK__Grupo__IdPlantel__52593CB8" Association="JTorresProgramacionNCapasModel.FK__Grupo__IdPlantel__52593CB8">
+            <End Role="Plantel" EntitySet="Plantels" />
+            <End Role="Grupo" EntitySet="Grupoes" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="MateriaGetAll_Result">
           <Property Type="Int32" Name="IdMateria" Nullable="false" />
@@ -192,6 +235,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="IdGrupo" />
+          </Key>
+          <Property Name="IdGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Especialidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdPlantel" Type="Int32" />
+          <NavigationProperty Name="Plantel" Relationship="JTorresProgramacionNCapasModel.FK__Grupo__IdPlantel__52593CB8" FromRole="Grupo" ToRole="Plantel" />
+        </EntityType>
+        <EntityType Name="Plantel">
+          <Key>
+            <PropertyRef Name="IdPlantel" />
+          </Key>
+          <Property Name="IdPlantel" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaginaWeb" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Grupoes" Relationship="JTorresProgramacionNCapasModel.FK__Grupo__IdPlantel__52593CB8" FromRole="Plantel" ToRole="Grupo" />
+        </EntityType>
+        <Association Name="FK__Grupo__IdPlantel__52593CB8">
+          <End Type="JTorresProgramacionNCapasModel.Plantel" Role="Plantel" Multiplicity="0..1" />
+          <End Type="JTorresProgramacionNCapasModel.Grupo" Role="Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plantel">
+              <PropertyRef Name="IdPlantel" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="IdPlantel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -209,6 +283,7 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="JTorresProgramacionNCapasModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdComputadora" ColumnName="IdComputadora" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="APellidoPaterno" ColumnName="APellidoPaterno" />
@@ -258,6 +333,25 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="MateriaAdd" FunctionName="JTorresProgramacionNCapasModel.Store.MateriaAdd" />
+          <EntitySetMapping Name="Grupoes">
+            <EntityTypeMapping TypeName="JTorresProgramacionNCapasModel.Grupo">
+              <MappingFragment StoreEntitySet="Grupo">
+                <ScalarProperty Name="IdPlantel" ColumnName="IdPlantel" />
+                <ScalarProperty Name="Especialidad" ColumnName="Especialidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plantels">
+            <EntityTypeMapping TypeName="JTorresProgramacionNCapasModel.Plantel">
+              <MappingFragment StoreEntitySet="Plantel">
+                <ScalarProperty Name="PaginaWeb" ColumnName="PaginaWeb" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdPlantel" ColumnName="IdPlantel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

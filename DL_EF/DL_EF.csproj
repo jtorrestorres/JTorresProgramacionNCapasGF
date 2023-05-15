@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Grupo.cs">
+      <DependentUpon>JTorresProgramacionNCapas.tt</DependentUpon>
+    </Compile>
     <Compile Include="JTorresProgramacionNCapas.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,6 +75,9 @@
       <DependentUpon>JTorresProgramacionNCapas.tt</DependentUpon>
     </Compile>
     <Compile Include="MateriaGetById_Result.cs">
+      <DependentUpon>JTorresProgramacionNCapas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Plantel.cs">
       <DependentUpon>JTorresProgramacionNCapas.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
