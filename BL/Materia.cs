@@ -270,7 +270,7 @@ namespace BL
                     materiaLinq.FechaCreacion = DateTime.Now;
                     materiaLinq.FechaModificacion = DateTime.Now;
                     materiaLinq.FechaInscripcion = DateTime.ParseExact(materia.FechaInscripcion, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
+                    materiaLinq.Imagen = materia.Imagen;
 
                     context.Materias.Add(materiaLinq);
 
@@ -311,7 +311,8 @@ namespace BL
                                             Nombre1 = materiaAlias.Nombre,
                                             Creditos1 = materiaAlias.Creditos,
                                             Costo1 = materiaAlias.Costo,
-                                            IdSemestre1 = materiaAlias.IdSemestre
+                                            IdSemestre1 = materiaAlias.IdSemestre,
+                                            Imagen = materiaAlias.Imagen
                                         }).ToList();
 
 
@@ -331,7 +332,7 @@ namespace BL
                                 materiaItem.Costo = obj.Costo1.Value;
                                 materiaItem.Semestre = new ML.Semestre();                               
                                 materiaItem.Semestre.IdSemestre = (obj.IdSemestre1 == null)? byte.Parse("0"): obj.IdSemestre1.Value;
-
+                                materiaItem.Imagen = obj.Imagen;
                                 result.Objects.Add(materiaItem);
                             }
 
@@ -382,7 +383,8 @@ namespace BL
                                            Nombre1 = materiaAlias.Nombre,
                                            Creditos1 = materiaAlias.Creditos,
                                            Costo1 = materiaAlias.Costo,
-                                           IdSemestre1=materiaAlias.IdSemestre
+                                           IdSemestre1=materiaAlias.IdSemestre,
+                                           Imagen1=materiaAlias.Imagen
                                        }).FirstOrDefault();
 
 
@@ -394,6 +396,7 @@ namespace BL
                         materiaItem.Nombre = itemMateria.Nombre1;
                         materiaItem.Creditos = itemMateria.Creditos1.Value;
                         materiaItem.Costo = itemMateria.Costo1.Value;
+                        materiaItem.Imagen = itemMateria.Imagen1;
                         materiaItem.Semestre = new ML.Semestre();
                         materiaItem.Semestre.IdSemestre = (itemMateria.IdSemestre1 != null) ? itemMateria.IdSemestre1.Value : byte.Parse("0");
                         result.Object = materiaItem;

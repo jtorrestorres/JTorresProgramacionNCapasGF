@@ -1,0 +1,84 @@
+﻿@model ML.Usuario 
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Usuario</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Ingrese los datos de la usuario</h5>
+        </div>
+        <hr />
+    </div>
+
+
+    @using (Html.BeginForm("Form", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => Model.IdUsuario, new { @class = "hidden" })
+                @Html.TextBoxFor(model => Model.IdUsuario, new { @class = "form-control hidden" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => Model.Nombre)
+                @Html.TextBoxFor(model => Model.Nombre, new { @class = "form-control" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => Model.ApellidoPaterno)
+                @Html.TextBoxFor(model => Model.ApellidoPaterno, new { @class = "form-control" })
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => Model.ApellidoMaterno)
+                @Html.TextBoxFor(model => Model.ApellidoMaterno, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <br />
+
+
+        <br />
+        <div class="row">
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+            <div class="col-md-1">
+                @Html.ActionLink("Cancelar", "GetAll", "Materia", new { @class = "btn btn-danger" })
+            </div>
+        </div>
+
+    }
+
+
+</div>
+
+
+<script type="text/javascript">
+
+    var imgPreview = function (event) {
+        var output = document.getElementById('imgMateria');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+</script>
+

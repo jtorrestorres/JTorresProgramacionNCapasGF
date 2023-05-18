@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +12,7 @@ namespace PL_MVC.Controllers
 
         [HttpGet]
         public ActionResult GetAll()
+        
         {
             ML.Materia materia = new ML.Materia();
             materia.Materias = new List<object>();
@@ -50,6 +52,7 @@ namespace PL_MVC.Controllers
                 materia.Nombre = ((ML.Materia)result.Object).Nombre;
                 materia.Costo = ((ML.Materia)result.Object).Costo;
                 materia.Creditos = ((ML.Materia)result.Object).Creditos;
+                materia.Imagen = ((ML.Materia)result.Object).Imagen;
                 materia.Semestre.IdSemestre = ((ML.Materia)result.Object).Semestre.IdSemestre;
                 return View(materia);
             }
@@ -57,10 +60,20 @@ namespace PL_MVC.Controllers
         }
 
         [HttpPost] // Recibir los datos del formulario
-        public ActionResult Form(ML.Materia materia)
+
+        //
+        //varbinary -> arreglo de bytes
+        public ActionResult Form(ML.Materia materia, HttpPostedFileBase imgMateria)
         {
+            ML.Result resultSemestres = BL.Semestre.GetAllLinQ();
+            materia.Semestre = new ML.Semestre();
+            materia.Semestre.Semestres = resultSemestres.Objects;
+
+            int x = 0;
             if (materia.IdMateria == 0) //add
             {
+                materia.Imagen = this.ConvertToBytes(imgMateria);
+
                 ML.Result result = BL.Materia.AddLinQ(materia);
 
                 if (result.Correct)
@@ -91,9 +104,17 @@ namespace PL_MVC.Controllers
                 }
             }
 
-            return PartialView("Modal");
+            return View(materia);
         }
 
+
+        public byte[] ConvertToBytes(HttpPostedFileBase image)
+        {
+            byte[] imageBytes = null;
+            BinaryReader reader = new BinaryReader(image.InputStream);
+            imageBytes = reader.ReadBytes((int)image.ContentLength);
+            return imageBytes;
+        }
 
         public ActionResult Delete(int IdMateria)
         {
