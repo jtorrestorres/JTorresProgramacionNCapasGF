@@ -13,14 +13,14 @@ namespace DL_EF
     
     public partial class MateriaGetAll_Result
     {
-        public int IdMateria { get; set; }
-        public string Nombre { get; set; }
-        public Nullable<byte> Creditos { get; set; }
-        public Nullable<decimal> Costo { get; set; }
-        public Nullable<byte> IdSemestre { get; set; }
-        public Nullable<System.DateTime> FechaCreacion { get; set; }
-        public Nullable<System.DateTime> FechaModificacion { get; set; }
-        public Nullable<int> IdUsuarioModificacion { get; set; }
-        public byte[] Imagen { get; set; }
+            public int IdMateria { get; set; }
+            public string Nombre { get; set; }
+            public Nullable<byte> Creditos { get; set; }
+            public Nullable<decimal> Costo { get; set; }
+            public Nullable<byte> IdSemestre { get; set; }
+            public Nullable<System.DateTime> FechaCreacion { get; set; }
+            public Nullable<System.DateTime> FechaModificacion { get; set; }
+            public Nullable<int> IdUsuarioModificacion { get; set; }
+            public byte[] Imagen { get; set; }
     }
 }

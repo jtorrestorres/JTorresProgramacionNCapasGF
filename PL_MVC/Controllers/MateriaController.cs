@@ -69,10 +69,15 @@ namespace PL_MVC.Controllers
             materia.Semestre = new ML.Semestre();
             materia.Semestre.Semestres = resultSemestres.Objects;
 
-            int x = 0;
-            if (materia.IdMateria == 0) //add
+            
+            if(imgMateria!= null)
             {
                 materia.Imagen = this.ConvertToBytes(imgMateria);
+
+            }
+
+            if (materia.IdMateria == 0) //add
+            {
 
                 ML.Result result = BL.Materia.AddLinQ(materia);
 

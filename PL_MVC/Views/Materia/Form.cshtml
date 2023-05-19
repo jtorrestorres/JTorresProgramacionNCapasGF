@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-md-6">
                 @Html.LabelFor(materia => Model.Creditos)
-                @Html.TextBoxFor(materia => Model.Creditos, new { @class = "form-control" })
+                @Html.TextBoxFor(materia => Model.Creditos, "{0:#.#}", new { @class = "form-control" })
             </div>
         </div>
         <br />
@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-md-6">
                 @Html.LabelFor(materia => Model.FechaInscripcion)
-                @Html.TextBoxFor(materia => Model.FechaInscripcion, new { @class = "form-control" })
+                @Html.TextBoxFor(materia => Model.FechaInscripcion, new { @class = "form-control", @id="txtFechaInscripcion" })
             </div>
 
 
@@ -69,13 +69,13 @@
 
         </div>
 
-        
-        
+
+
         <div class="row">
             <div class="col-md-6">
                 @Html.LabelFor(model => Model.Imagen)
+                @Html.HiddenFor(model => Model.Imagen)
                 <input type="file" id="fuimgMateria" onchange="imgPreview(event);" name="imgMateria" />
-                @Html.HiddenFor(model=> Model.Imagen)
                 @if (Model.Imagen == null)
                 {
                     <img id="imgMateria" src="~/Images/imageNoProductDefault.png" style="width:200px; height:200px;" />
@@ -89,7 +89,7 @@
 
 
         </div>
-        
+
         <br />
         <div class="row">
             <div class="col-md-1">
@@ -105,14 +105,54 @@
 
 </div>
 
+@*<script src="~/Scripts/jquery-3.4.1.js"></script>*@
+<script src="~/Scripts/Imagen_Usuario_Producto/PreviewImage.js"></script>
+@*<script src="~/Scripts/Producto/Datepicker.js"></script>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
-<script type="text/javascript"> 
-    var imgPreview = function (event) {
-        var output = document.getElementById('imgMateria');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function () {
-            URL.revokeObjectURL(output.src) // free memory
-        }
-    };
+
+<script type="text/javascript">
+
+    var j = jQuery.noConflict();
+
+    j(function () {
+        j("#txtFechaInscripcion").datepicker({
+            dateFormat: 'dd-mm-yy',
+            showOn: 'button',
+            buttonImage: "../../Images/Calendar.png",
+            buttonImageOnly: true,
+            changeMonth: true,
+            changeYear: true
+
+        });
+        $(".ui-datepicker-trigger").css("width", "30px");
+        $(".ui-datepicker-trigger").css("height", "30px");
+    });
+    
+
 </script>
-
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >
+    Launch demo modal
+</button>-->
+<!-- Modal -->
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>-->
