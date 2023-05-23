@@ -20,32 +20,37 @@
 
     @using (Html.BeginForm("Form", "Materia", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
 
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(materia => Model.IdMateria, new { @class = "hidden" })
-                @Html.TextBoxFor(materia => Model.IdMateria, new { @class = "form-control hidden" })
+                @Html.LabelFor(model => Model.IdMateria, new { @class = "hidden" })
+                @Html.TextBoxFor(model => Model.IdMateria, new { @class = "form-control hidden" })
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(materia => Model.Nombre)
-                @Html.TextBoxFor(materia => Model.Nombre, new { @class = "form-control" })
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-md-6">
-                @Html.LabelFor(materia => Model.Creditos)
-                @Html.TextBoxFor(materia => Model.Creditos, "{0:#.#}", new { @class = "form-control" })
+                @Html.LabelFor(model => Model.Nombre)
+                @Html.TextBoxFor(model => Model.Nombre, new { @class = "form-control", @onkeypress = "return SoloLetras(event)" })
+                @Html.ValidationMessageFor(model => Model.Nombre, "", new { @class = "text-danger" })
             </div>
         </div>
         <br />
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(materia => Model.Costo)
-                @Html.TextBoxFor(materia => Model.Costo, new { @class = "form-control" })
+                @Html.LabelFor(model => Model.Creditos)
+                @Html.TextBoxFor(model => Model.Creditos, "{0:#.#}", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => Model.Creditos)
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => Model.Costo)
+                @Html.TextBoxFor(model => Model.Costo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => Model.Costo)
+
             </div>
         </div>
 
@@ -53,8 +58,10 @@
 
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(materia => Model.FechaInscripcion)
-                @Html.TextBoxFor(materia => Model.FechaInscripcion, new { @class = "form-control", @id="txtFechaInscripcion" })
+                @Html.LabelFor(model => Model.FechaInscripcion)
+                @Html.TextBoxFor(model => Model.FechaInscripcion, new { @class = "form-control", @id = "txtFechaInscripcion" })
+                @Html.ValidationMessageFor(model => Model.FechaInscripcion)
+
             </div>
 
 
@@ -62,7 +69,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(materia => Model.Semestre.Semestres)
+                @Html.LabelFor(model => Model.Semestre.Semestres)
                 @Html.DropDownListFor(model => model.Semestre.IdSemestre, new SelectList(Model.Semestre.Semestres, "IdSemestre", "Nombre"), "Selecciona un semestre correspondiente", new { @class = "form-control" })
             </div>
 
@@ -130,7 +137,21 @@
         $(".ui-datepicker-trigger").css("width", "30px");
         $(".ui-datepicker-trigger").css("height", "30px");
     });
-    
+
+
+    function SoloLetras(textbox) {
+        var input = textbox.key
+        let result = /^[a-zA-Z]+$/.test(input);
+
+        if (result == true) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+
 
 </script>
 <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >

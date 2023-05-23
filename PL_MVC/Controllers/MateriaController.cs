@@ -69,45 +69,48 @@ namespace PL_MVC.Controllers
             materia.Semestre = new ML.Semestre();
             materia.Semestre.Semestres = resultSemestres.Objects;
 
+            if(ModelState.IsValid)
+            {
+                if (imgMateria != null)
+                {
+                    materia.Imagen = this.ConvertToBytes(imgMateria);
+
+                }
+
+                if (materia.IdMateria == 0) //add
+                {
+
+                    ML.Result result = BL.Materia.AddLinQ(materia);
+
+                    if (result.Correct)
+                    {
+                        //mediante el viewbag enviamos datos
+                        //del controlador -> hacia la vista
+                        ViewBag.Mensaje = "Se ha ingresado correctamente la materia";
+                    }
+                    else
+                    {
+                        ViewBag.Mensaje = "No se ha ingresado correctamente la materia. Error: " + result.ErrorMessage;
+                    }
+
+                }
+                else //update
+                {
+                    ML.Result result = BL.Materia.Update(materia);
+
+                    if (result.Correct)
+                    {
+                        //mediante el viewbag enviamos datos
+                        //del controlador -> hacia la vista
+                        ViewBag.Mensaje = "Se ha actualizado correctamente la materia";
+                    }
+                    else
+                    {
+                        ViewBag.Mensaje = "No se ha podido actualizar correctamente la materia. Error: " + result.ErrorMessage;
+                    }
+                }
+            }
             
-            if(imgMateria!= null)
-            {
-                materia.Imagen = this.ConvertToBytes(imgMateria);
-
-            }
-
-            if (materia.IdMateria == 0) //add
-            {
-
-                ML.Result result = BL.Materia.AddLinQ(materia);
-
-                if (result.Correct)
-                {
-                    //mediante el viewbag enviamos datos
-                    //del controlador -> hacia la vista
-                    ViewBag.Mensaje = "Se ha ingresado correctamente la materia";
-                }
-                else
-                {
-                    ViewBag.Mensaje = "No se ha ingresado correctamente la materia. Error: " + result.ErrorMessage;
-                }
-
-            }
-            else //update
-            {
-                ML.Result result = BL.Materia.Update(materia);
-
-                if (result.Correct)
-                {
-                    //mediante el viewbag enviamos datos
-                    //del controlador -> hacia la vista
-                    ViewBag.Mensaje = "Se ha actualizado correctamente la materia";
-                }
-                else
-                {
-                    ViewBag.Mensaje = "No se ha podido actualizar correctamente la materia. Error: " + result.ErrorMessage;
-                }
-            }
 
             return View(materia);
         }
