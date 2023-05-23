@@ -32,11 +32,20 @@
         <div class="row">
             <div class="col-md-6">
                 @Html.LabelFor(model => Model.Nombre)
-                @Html.TextBoxFor(model => Model.Nombre, new { @class = "form-control", @onkeypress = "return SoloLetras(event)" })
-                @Html.ValidationMessageFor(model => Model.Nombre, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => Model.Nombre, new { @class = "form-control", @id="txtNombre", @onkeypress = "return SoloLetras(event, this)" })
+                @Html.ValidationMessageFor(model => Model.Nombre, "", new { @class = "text-danger", @id="lblNombreErrorMessage" })
             </div>
         </div>
         <br />
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => Model.Descripcion)
+                @Html.TextBoxFor(model => Model.Descripcion, new { @class = "form-control",@id="txtDescripcion", @onkeypress = "return SoloLetras(event, this)" })
+                @Html.ValidationMessageFor(model => Model.Descripcion, "", new { @class = "text-danger", @id= "lblDescripcionErrorMessage" })
+            </div>
+        </div>
+        <br />
+
         <div class="row">
             <div class="col-md-6">
                 @Html.LabelFor(model => Model.Creditos)
@@ -138,15 +147,30 @@
         $(".ui-datepicker-trigger").css("height", "30px");
     });
 
+     
+    //txtNombre   -> lblNombreErrorMessage
+    //txtDescripcion -> lblDescripcionErrorMessage
 
-    function SoloLetras(textbox) {
-        var input = textbox.key
-        let result = /^[a-zA-Z]+$/.test(input);
 
-        if (result == true) {
+    function SoloLetras(event, textbox) {
+        var id = textbox.id;
+        var input = event.key
+        
+        if (/^[a-zA-Z]+$/.test(input)) {
             return true
         }
         else {
+            if (id == "txtNombre") {
+                //lblNombreErrorMessage
+                $("#lblNombreErrorMessage").text('Solo se permiten letras') //jQuery
+                $("#txtNombre").css('border', '2px solid #a94442');
+
+                //document.getElementById("lblNombreErrorMessage")
+            }
+            else
+                if (id == "txtDescripcion") {
+                   //lblDescripcionErrorMessage
+                }
             return false
         }
     }

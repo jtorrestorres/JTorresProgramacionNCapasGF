@@ -22,7 +22,7 @@ namespace ML
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Solo se aceptan letras")]
         public string Nombre { get; set; }
 
-
+        public string Descripcion { get; set; }
         [Required]
         [Range(1,255,ErrorMessage ="Los créditos deben de tener un valor de 1 a 255")]
         public byte Creditos { get; set; }
